@@ -88,7 +88,7 @@ const MODIFIERS = {
 		}
 	};
 
-class Keycuts {
+export default class Keycuts {
 	constructor() {
 		this.defaultShortcutOption = {
 			type: 'keydown',
@@ -256,8 +256,4 @@ class Keycuts {
 			targetElement[`on${type}`] = false;
 		}
 	}
-}
-
-let keycuts = new Keycuts();
-
-module.exports = keycuts;
+};
