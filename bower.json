@@ -1,18 +1,23 @@
 {
-  "name": "js-shortcuts",
-  "main": "js-shortcuts-angular.js",
-  "version": "0.1.0",
-  "homepage": "https://github.com/xaneem/js-shortcuts",
+  "name": "keycuts",
+  "homepage": "https://github.com/kirrie/keycuts",
   "authors": [
-    "Binny V A",
-    "Saneem"
+    "kirrie <kirrie@gmail.com>"
   ],
-  "description": "Easily add combination key-press event listeners in JavaScript. Useful for adding keyboard shortcuts to web apps. Vanilla and AngularJS.",
+  "description": "javascript keyboard shortcuts",
+  "main": "src/keycuts.js",
   "keywords": [
-    "keyboard shortcuts",
-    "key combination binding",
-    "javascript shortcuts",
-    "angular keyboard shortcuts"
+    "javascript",
+    "shortcuts",
+    "keyboard",
+    "keycode"
   ],
-  "license": "BSD"
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
