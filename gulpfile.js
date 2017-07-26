@@ -5,23 +5,51 @@ const
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename');
 
-gulp
-	.task('build', callback => {
-		pump([
-			gulp.src('src/*.es6'),
-			babel({presets: ['es2015']}),
-			gulp.dest('dist')
-		], callback);
-	})
-	.task('build-compress', callback => {
-		pump([
-			gulp.src('src/*.es6'),
-			babel({presets: ['es2015']}),
-			uglify({mangle: true}),
-			rename({suffix: '.min'}),
-			gulp.dest('dist')
-		], callback);
-	})
+const
+	getRoutines = (type = '', compress = false) => {
+		let routines = [gulp.src('src/*.es6')];
 
-	// 기본 태스크
-	.task('default', ['build', 'build-compress']);
+		if(type === 'amd') {
+			routines.push(babel({
+				presets: ['es2015'],
+				plugins: ['transform-es2015-modules-amd']
+			}));
+			routines.push(rename({
+				suffix: '-amd'
+			}));
+		} else {
+			routines.push(babel({
+				presets: ['es2015']
+			}));
+		}
+
+		if(compress) {
+			routines.push(uglify({
+				mangle: true
+			}));
+			routines.push(rename({
+				suffix: '.min'
+			}));
+		}
+
+		routines.push(gulp.dest('dist'));
+
+		return routines;
+	};
+
+gulp
+	.task('noamd', callback => {
+		pump(getRoutines(), callback);
+	})
+	.task('noamd-compress', callback => {
+		pump(getRoutines('', true), callback);
+	})
+	.task('amd', callback => {
+		pump(getRoutines('amd'), callback);
+	})
+	.task('amd-compress', callback => {
+		pump(getRoutines('amd', true), callback);
+	})
+	.task('build', ['noamd', 'noamd-compress'])
+	.task('build-amd', ['amd', 'amd-compress'])
+	.task('default', ['build', 'build-amd']);
