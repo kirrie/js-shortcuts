@@ -128,6 +128,7 @@ var Keycuts = function () {
 				var char = void 0,
 				    code = void 0,
 				    kp = 0,
+				    keys = shortcutCombination.split('+'),
 				    modifiers = {
 					shift: {
 						wanted: false,
@@ -182,7 +183,7 @@ var Keycuts = function () {
 					modifiers.meta.pressed = true;
 				}
 
-				shortcutCombination.split('+').forEach(function (key) {
+				keys.forEach(function (key) {
 					switch (key) {
 						case 'ctrl':
 						case 'control':

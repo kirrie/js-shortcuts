@@ -105,7 +105,7 @@ export default class Keycuts {
  		shortcutCombination = shortcutCombination.toLowerCase();
 		let targetElement = _.isString(option.target) ? document.getElementById(option.target) : option.target;
 		let handler = e => {
-			let char, code, kp = 0,
+			let char, code, kp = 0, keys = shortcutCombination.split('+'),
 				modifiers = {
 					shift: {
 						wanted: false,
@@ -160,7 +160,7 @@ export default class Keycuts {
 				modifiers.meta.pressed = true;
 			}
 
-			shortcutCombination.split('+').forEach((key) => {
+			keys.forEach((key) => {
 				switch(key) {
 					case 'ctrl':
 					case 'control':
