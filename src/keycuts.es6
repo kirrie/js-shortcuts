@@ -69,25 +69,6 @@ const SPECIALKEYS = {
 		f12: 123
 	};
 
-const MODIFIERS = {
-		shift: {
-			wanted: false,
-			pressed: false
-		},
-		ctrl: {
-			wanted: false,
-			pressed: false
-		},
-		alt: {
-			wanted: false,
-			pressed: false
-		},
-		meta: {
-			wanted: false,
-			pressed: false
-		}
-	};
-
 export default class Keycuts {
 	constructor() {
 		this.defaultShortcutOption = {
@@ -98,6 +79,28 @@ export default class Keycuts {
 			keycode: false
 		};
 		this.allShortcuts = {};
+	}
+
+	getKeycode(e) {
+		return (e.keyCode ? e.keyCode : (e.which ? e.which : 0));
+	}
+
+	getChar(code) {
+		return (code === 188 ? ',' : (code === 190 ? '.' : String.fromCharCode(code).toLowerCase()));
+	}
+
+	isInput(e) {
+		let element = e.target ? e.target : (e.srcElement ? e.srcElement : null);
+
+		if(element !== null && element.nodeType === 3) {
+			element = element.parentNode;
+		}
+
+		if(element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	add(shortcutCombination, callback, option = {}) {
@@ -127,25 +130,12 @@ export default class Keycuts {
 
 			e = e || window.event;
 
-			if(option.disableInInput) {
-				let element = e.target ? e.target : (e.srcElement ? e.srcElement : null);
-
-				if(element !== null && element.nodeType === 3) {
-					element = element.parentNode;
-				}
-
-				if(element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-					return false;
-				}
+			if(option.disableInInput && this.isInput(e)) {
+				return false;
 			}
 
-			if(e.keyCode) {
-				code = e.keyCode;
-			} else if(e.which) {
-				code = e.which;
-			}
-
-			char = (code === 188 ? ',' : (code === 190 ? '.' : String.fromCharCode(code).toLowerCase()));
+			code = this.getKeycode(e);
+			char = this.getChar(code);
 
 			if(e.ctrlKey) {
 				modifiers.ctrl.pressed = true;
@@ -234,6 +224,8 @@ export default class Keycuts {
 		} else {
 			targetElement[`on${option.type}`] = handler;
 		}
+
+		return this;
 	}
 
 	remove(shortcutCombination) {
@@ -255,5 +247,7 @@ export default class Keycuts {
 		} else {
 			targetElement[`on${type}`] = false;
 		}
+
+		return this;
 	}
 };

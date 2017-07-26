@@ -1,26 +1,17 @@
-# js-shortcuts
+# Keycuts
 
-Easily add combination key-press event listeners in JavaScript. Useful for adding keyboard shortcuts to web applications.
-
-Here's the [original version](http://www.openjs.com/scripts/events/keyboard_shortcuts/). I'm putting this up on GitHub to make loading this using Bower a bit easier.
+forked from [xaneem's js-shortcuts](https://github.com/xaneem/js-shortcuts). just rewrite scripts as es6 and make a amd module package. (this scripts needs underscore).
 
 ## Usage
+```javaScript
+	require(['keycuts'], Keycuts => {
+		const keycuts = new Keycuts.default();
 
-Basic Version
-
-    shortcut.add("Ctrl+B", function () {
-      window.alert("Make it Bold!");
-    });
-
-AngularJS
-
-    app.controller('yourCtrl', function(jsShortcuts) {
-    
-      jsShortcuts.add("Ctrl+B", function () {
-        window.alert("Make it Bold!");
-      });  
-      
-    });
+		keycuts.add('right', e => {
+			alert('right arrow pushed!');
+		});
+	});
+```
 
 More information available on the [original doc](http://www.openjs.com/scripts/events/keyboard_shortcuts/) page.
 
@@ -28,22 +19,9 @@ More information available on the [original doc](http://www.openjs.com/scripts/e
 
 ### Bower
 Install via bower:
-
-    bower install js-shortcuts --save 
-
-and require the script:
-
-    <script src="bower_components/js-shortcuts/js-shortcuts.js"></script>
-
-### Angular
-Install via bower as above. Use the AngularJS version of the script.
-
-    <script src="bower_components/js-shortcuts/js-shortcuts-angular.js"></script>
-
-Add the module `js-shortcuts` as a dependency to your app
-
-    var app = angular.module('yourAwesomeApp', ['js-shortcuts']);
-
+```shell
+	> bower install keycuts --save
+```
 
 ## License
 BSD License

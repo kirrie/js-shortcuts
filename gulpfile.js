@@ -14,12 +14,12 @@ const
 				presets: ['es2015'],
 				plugins: ['transform-es2015-modules-amd']
 			}));
-			routines.push(rename({
-				suffix: '-amd'
-			}));
 		} else {
 			routines.push(babel({
 				presets: ['es2015']
+			}));
+			routines.push(rename({
+				suffix: '-noamd'
 			}));
 		}
 
@@ -52,4 +52,4 @@ gulp
 	})
 	.task('build', ['noamd', 'noamd-compress'])
 	.task('build-amd', ['amd', 'amd-compress'])
-	.task('default', ['build', 'build-amd']);
+	.task('default', ['build-amd']);
